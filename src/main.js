@@ -1,3 +1,5 @@
+const ANSWER = "CARDS";
+
 document.addEventListener("DOMContentLoaded", () => {
   const inputs = document.querySelectorAll('input[maxlength="1"]');
 
@@ -37,6 +39,62 @@ document.addEventListener("DOMContentLoaded", () => {
         inputs[backspaceIndex].focus();
         input.value = "";
       }
+      
+      //allow submit on last cell of each row
+      if (event.key === "Enter" && (index + 1) % 5 == 0) {
+        handleSubmit(input);
+      }
     });
   });
 });
+
+const handleSubmit = (input) => {
+  var form = input.form; // stack overflow hack, dunno if its widely used
+  let value = [];
+
+  for (i = 0; i < form.length; i++) {
+    value.push(form[i].value);
+  }
+
+  checkGuess(form, value);
+};
+
+// to check i'll perform three passes over the guess word -> first to check for the letters which are in the exact position
+// then to check for letters than exist but arent in the right place
+// then for letters that don't exist at all
+const checkGuess = (form, guess) => {
+  let colors = ["gray", "gray", "gray", "gray", "gray"];
+  let answer = ANSWER.split('');
+
+  for (i = 0; i < 5; i++) {
+    let guessChar = guess[i];
+    let answerChar = answer[i];
+
+    if (guessChar == answerChar) {
+      colors[i] = "green"; 
+      answer[i] = "x";     
+    }
+  }
+
+  for (i = 0; i < 5; i++) {
+    if (colors[i] == "green") continue;
+
+    let guessChar = guess[i];
+    
+    for (j = 0; j < 5; j++) {
+      if (i == j) continue;
+      let answerChar = answer[j];
+
+      if (guessChar === answerChar) {
+        colors[i] = "yellow";
+        answer[j] = "x"; // this character (lowercase) will never occur in the answer so im using it to ensure no character is counted twice
+      }
+    }
+  }
+
+  console.log(colors);
+
+  for (i = 0; i < 5; i++) {
+    form[i].style.color = colors[i];
+  }
+}
