@@ -1,1 +1,65 @@
 @import "tailwindcss";
+
+.key {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: x-large;
+    font-weight: 600;
+    background-color: #818384;
+    color: white;
+    border-radius: 20px;
+    padding: 12px;
+}
+
+@keyframes flip-green {
+    0% {
+        transform: scaleY(1);
+    }
+    50% {
+        background: white;
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
+        background: #5a9a54;
+    }
+}
+
+@keyframes flip-yellow {
+    0% {
+        transform: scaleY(1);
+    }
+    50% {
+        background: white;
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
+        background: #b59f3b;
+    }
+}
+
+@keyframes flip-gray {
+    0% {
+        transform: scaleY(1);
+    }
+    50% {
+        background: white;
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
+        background: #3a3a3c;
+    }
+}
+
+.flip-green {
+    animation: flip-green 500ms ease forwards;
+}
+
+.flip-yellow {
+    animation: flip-yellow 500ms ease forwards;
+}
+
+.flip-gray {
+    animation: flip-gray 500ms ease forwards;
+}

@@ -1,55 +1,115 @@
 const ANSWER = "CARDS";
+let wordList = null;
+let focusedIdx = 0;
+
+let inputs = null;
+let keys = null;
+
+let canMakeGuesses = true;
 
 document.addEventListener("DOMContentLoaded", () => {
-  const inputs = document.querySelectorAll('input[maxlength="1"]');
+  fetch("valid-wordle-words.txt")
+    .then((response) => {
+      if (!response.ok) {
+        console.log("couldnt read file");
+        return;
+      }
+      return response.text();
+    })
+    .then((data) => {
+      wordList = [data.split("\n")];
+    });
 
-  // focus on the first cell on page load
-  inputs[0].focus();
+  inputs = document.querySelectorAll('input[maxlength="1"]');
+  keys = document.querySelectorAll(".key");
 
-  // clean up everything on reload
-  // prob wont keep it once the actual game exists, dont want people to have free tries
   inputs.forEach((input) => {
     input.value = "";
   });
 
-  // convert each letter to uppercase
-  inputs.forEach((input, index) => {
-    input.addEventListener("input", () => {
-      input.value = input.value.toUpperCase();
-      // reject all non-alphabet input values
-      if (input.value < "A" || input.value > "Z") {
-        input.value = "";
-      } else {
-        // auto roll-over
-        if ((index + 1) % 5 == 0) {
-          //do nothing if we're on the last cell of a row
-        } else if (input.value.length == input.maxLength) {
-          inputs[index + 1].focus();
-        }
-      }
-    });
+  inputs[0].focus();
+  inputs.forEach((input) => {
+    input.addEventListener("input", () => handleInputField(input));
 
-    // unless we're on the first cell, target the cell before the focused one
-    // the focused cell is always the one just after the filled cells
-    let backspaceIndex = index % 5 == 0 ? index : index - 1;
+    input.addEventListener("keydown", (event) =>
+      handleBackspaceAndEnter(event)
+    );
+  });
 
-    input.addEventListener("keydown", (event) => {
-      if (event.key === "Backspace") {
-        event.preventDefault(); // otherwise current cell would get erased too
-        inputs[backspaceIndex].focus();
-        input.value = "";
-      }
-      
-      //allow submit on last cell of each row
-      if (event.key === "Enter" && (index + 1) % 5 == 0) {
-        handleSubmit(input);
-      }
-    });
+  keys.forEach((key) => {
+    key.addEventListener("click", () => handleOnScreenKey(key));
   });
 });
 
-const handleSubmit = (input) => {
-  var form = input.form; // stack overflow hack, dunno if its widely used
+const handleInputField = (input) => {
+  let curIdx = -1;
+
+  for (i = 0; i < 30; i++) {
+    if (inputs[i] == input) {
+      curIdx = i;
+      if (curIdx != focusedIdx) {
+        input.value = "";
+        return;
+      }
+    }
+  }
+
+  input.value = input.value.toUpperCase();
+  if (input.value < "A" || input.value > "Z") {
+    input.value = "";
+  } else {
+    if ((curIdx + 1) % 5 == 0) {
+      // do nothing
+    } else if (input.value.length == 1) {
+      inputs[curIdx + 1].focus();
+      focusedIdx = curIdx + 1;
+    }
+  }
+};
+
+const handleOnScreenKey = (key) => {
+  let curIdx = focusedIdx;
+
+  if (curIdx == 0 || curIdx % 5 != 0) {
+    if (key.textContent != "Enter" && key.textContent != "⌫") {
+      inputs[curIdx].value = key.textContent;
+      focusedIdx = curIdx + 1;
+      inputs[curIdx + 1].focus();
+    }
+  } else {
+    // cellotape ahh solution
+    focusedIdx = curIdx - 1;
+    inputs[curIdx - 1].focus();
+    if (key.textContent == "Enter") {
+      handleBackspaceAndEnter("Enter");
+    }
+    if (key.textContent == "⌫") {
+      handleBackspaceAndEnter("Backspace");
+    }
+  }
+};
+
+const handleBackspaceAndEnter = (event = null, key=null) => {
+  let curIdx = focusedIdx;
+
+  if (event.key == "Backspace" || key == "Backspace") {
+    event.preventDefault();
+    inputs[focusedIdx].value = "";
+    if (focusedIdx % 5 != 0) {
+      focusedIdx = curIdx - 1;
+      inputs[focusedIdx].focus();
+    }
+  }
+
+  if ((event.key == "Enter" || key == "Enter") && (focusedIdx + 1) % 5 == 0) {
+    handleSubmit();
+  }
+};
+
+const handleSubmit = () => {
+  let input = inputs[focusedIdx];
+  let form = input.form;
+
   let value = [];
 
   for (i = 0; i < form.length; i++) {
@@ -57,30 +117,40 @@ const handleSubmit = (input) => {
   }
 
   checkGuess(form, value);
+  if (canMakeGuesses) {
+    inputs[focusedIdx + 1].focus();
+    focusedIdx = focusedIdx + 1;
+  }
 };
 
-// to check i'll perform three passes over the guess word -> first to check for the letters which are in the exact position
-// then to check for letters than exist but arent in the right place
-// then for letters that don't exist at all
 const checkGuess = (form, guess) => {
   let colors = ["gray", "gray", "gray", "gray", "gray"];
-  let answer = ANSWER.split('');
+  let answer = ANSWER.split("");
+  let correct = 0;
 
   for (i = 0; i < 5; i++) {
     let guessChar = guess[i];
     let answerChar = answer[i];
 
     if (guessChar == answerChar) {
-      colors[i] = "green"; 
-      answer[i] = "x";     
+      correct++;
+      colors[i] = "green";
+      answer[i] = "x";
+
+      // let idx = answer.charCodeAt(i);
+      // letterColors[idx] = "green";
     }
+  }
+
+  if (correct == 5) {
+    canMakeGuesses = false;
   }
 
   for (i = 0; i < 5; i++) {
     if (colors[i] == "green") continue;
 
     let guessChar = guess[i];
-    
+
     for (j = 0; j < 5; j++) {
       if (i == j) continue;
       let answerChar = answer[j];
@@ -92,9 +162,13 @@ const checkGuess = (form, guess) => {
     }
   }
 
-  console.log(colors);
-
   for (i = 0; i < 5; i++) {
-    form[i].style.color = colors[i];
+    setTimeout(updateStyle, 500 * i, form[i], colors[i]);
   }
-}
+
+  // findValidGuesses(ANSWER);
+};
+
+const updateStyle = (cell, color) => {
+  cell.classList.add(`flip-${color}`);
+};
