@@ -6,11 +6,11 @@
   </head>
   <body class="bg-[#121213] min-h-screen text-white container mx-auto overflow-y-auto p-4 select-none">
 
-    <!-- <div class="text-3xl flex justify-center">
-      Wordle
-    </div> -->
-    <div class="flex flex-row items-center justify-center w-full">
-      <div id = "center" class="items-center justify-center">
+    <div class="grid grid-cols-4 w-full">
+      <div id="left" class="col-span-1">
+
+      </div>
+      <div id = "center" class="items-center justify-center col-span-2">
         <div id="input-container" class="text-3xl justify-center flex flex-col mt-12 space-y-2 uppercase font-bold">
           <form name="row-1" id="row-1" class = "flex justify-center gap-2">
             <input id = "11" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
@@ -63,40 +63,43 @@
 
         <div id="keyboard-container" class="text-3xl justify-center items-center max-width-md flex flex-col mt-12 space-y-4 uppercase">
           <div class = "row">
-                <button class = "key">Q</button>
-                <button class = "key">W</button>
-                <button class = "key">E</button>
-                <button class = "key">R</button>
-                <button class = "key">T</button>
-                <button class = "key">Y</button>
-                <button class = "key">U</button>
-                <button class = "key">I</button>
-                <button class = "key">O</button>
-                <button class = "key">P</button>
+                <button id="Q" class = "key bg-[#818384]">Q</button>
+                <button id="W" class = "key bg-[#818384]">W</button>
+                <button id="E" class = "key bg-[#818384]">E</button>
+                <button id="R" class = "key bg-[#818384]">R</button>
+                <button id="T" class = "key bg-[#818384]">T</button>
+                <button id="Y" class = "key bg-[#818384]">Y</button>
+                <button id="U" class = "key bg-[#818384]">U</button>
+                <button id="I" class = "key bg-[#818384]">I</button>
+                <button id="O" class = "key bg-[#818384]">O</button>
+                <button id="P" class = "key bg-[#818384]">P</button>
             </div>
             <div class = "row">
-                <button class = "key">A</button>
-                <button class = "key">S</button>
-                <button class = "key">D</button>
-                <button class = "key">F</button>
-                <button class = "key">G</button>
-                <button class = "key">H</button>
-                <button class = "key">J</button>
-                <button class = "key">K</button>
-                <button class = "key">L</button>
+                <button id="A" class = "key bg-[#818384]">A</button>
+                <button id="S" class = "key bg-[#818384]">S</button>
+                <button id="D" class = "key bg-[#818384]">D</button>
+                <button id="F" class = "key bg-[#818384]">F</button>
+                <button id="G" class = "key bg-[#818384]">G</button>
+                <button id="H" class = "key bg-[#818384]">H</button>
+                <button id="J" class = "key bg-[#818384]">J</button>
+                <button id="K" class = "key bg-[#818384]">K</button>
+                <button id="L" class = "key bg-[#818384]">L</button>
             </div>
             <div class = "row">
-                <button class="key">Enter</button>
-                <button class = "key">Z</button>
-                <button class = "key">X</button>
-                <button class = "key">C</button>
-                <button class = "key">V</button>
-                <button class = "key">B</button>
-                <button class = "key">N</button>
-                <button class = "key">M</button>
-                <button class = "key">⌫</button>
+                <button class="key bg-[#818384]">Enter</button>
+                <button id="Z" class = "key bg-[#818384]">Z</button>
+                <button id="X" class = "key bg-[#818384]">X</button>
+                <button id="C" class = "key bg-[#818384]">C</button>
+                <button id="V" class = "key bg-[#818384]">V</button>
+                <button id="B" class = "key bg-[#818384]">B</button>
+                <button id="N" class = "key bg-[#818384]">N</button>
+                <button id="M" class = "key bg-[#818384]">M</button>
+                <button class = "key bg-[#818384]">⌫</button>
             </div>
         </div>
+      </div>
+      <div id = "right" class="text-right col-span-1 pr-4 pt-4 scroll-auto">
+        make the first guess
       </div>
 
     </div>
