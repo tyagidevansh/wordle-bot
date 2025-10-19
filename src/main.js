@@ -1,4 +1,4 @@
-const ANSWER = "CAADS";
+const ANSWER = "CARDS";
 let wordList = null;
 let focusedIdx = 0;
 
@@ -7,7 +7,7 @@ let keys = null;
 
 let canMakeGuesses = true;
 
-let greenChar = ['', '', '', '', ''];
+let greenChar = ["", "", "", "", ""];
 let yellowChar = [];
 let grayChar = [];
 
@@ -140,9 +140,9 @@ const checkGuess = (form, guess) => {
     if (guessChar == answerChar) {
       correct++;
       colors[i] = "green";
-      greenChar[i] = answer[i];
-      if (yellowChar.includes(answer[i])) {
-        let idx = yellowChar.indexOf(answer[i]);
+      greenChar[i] = answer[i].toLowerCase();
+      if (yellowChar.includes(answer[i].toLowerCase())) {
+        let idx = yellowChar.indexOf(answer[i].toLowerCase());
         yellowChar.splice(idx, 1);
       }
       answer[i] = "x";
@@ -174,7 +174,7 @@ const checkGuess = (form, guess) => {
     for (idx = 0; idx < tempYellowChar.length; idx++) {
       let curChar = tempYellowChar[idx];
       if (!yellowChar.includes(curChar)) {
-        yellowChar.push(curChar);
+        yellowChar.push(curChar.toLowerCase());
         break;
       }
 
@@ -182,7 +182,7 @@ const checkGuess = (form, guess) => {
       for (idx2 = idx + 1; idx2 < tempYellowChar.length; idx2++) {
         if (curChar === tempYellowChar[idx2]) {
           numOccurences++;
-          tempYellowChar[idx2] = 'x';
+          tempYellowChar[idx2] = "x";
         }
       }
 
@@ -195,14 +195,14 @@ const checkGuess = (form, guess) => {
       }
 
       for (idx4 = numOccurences; idx4 > 0; i++) {
-        yellowChar.push(curChar);
+        yellowChar.push(curChar.toLowerCase());
       }
     }
     if (colors[i] == "gray" && !grayChar.includes(guess[i])) {
-      grayChar.push(guess[i]);
+      grayChar.push(guess[i].toLowerCase());
     }
   }
-  
+
   console.log(greenChar);
   console.log(yellowChar);
   console.log(grayChar);
@@ -211,6 +211,8 @@ const checkGuess = (form, guess) => {
     setTimeout(updateStyle, 500 * i, form[i], colors[i]);
   }
   guess = guess.map((item) => item.toLowerCase());
+  let guessInList = wordList.indexOf(guess.join(""));
+  if (guessInList >= 0) wordList.splice(guessInList, 1);
   findValidGuesses(guess, colors);
 };
 
@@ -233,64 +235,62 @@ const updateStyle = (cell, color) => {
 
 const findValidGuesses = (guess, colors) => {
   if (!wordList || wordList.length == 0) return null;
-  
-  // for (i = 0; i < 5; i++) {
-  //   if (greenChar[i] != "") {
-  //     let k = 0;
-  //     while (k < wordList.length) {
-  //       if (wordList[k][i] != greenChar[i]) {
-  //         wordList.splice(i, 1);
-  //       } else k++;
-  //     }
-  //   }
-  // }
 
-  // while (i < wordList.length) {
-  //   let word = wordList[i];
-  //   for (j = 0; j < 5; j++) {
-  //     if (colors[j] === "gray") {
-  //       let k = 0;
-  //       if (!removedLetters.includes(guess[j])) {
-  //         while (k < wordList.length) {
-  //           if (wordList[k].includes(guess[j])) {
-  //             wordList.splice(k, 1);
-  //           } else {
-  //             k++;
-  //           }
-  //         }
-  //         removedLetters.push(guess[j]);
-  //       }
-  //     } else {
-  //       if (!existingLetters.includes(guess[j])) {
-  //         existingLetters.push(guess[j]);
-  //       }
-  //     }
-  //   }
+  for (i = 0; i < 5; i++) {
+    if (greenChar[i] != "") {
+      let k = 0;
+      while (k < wordList.length) {
+        let word = wordList[k];
+        if (word[i] != greenChar[i]) {
+          wordList.splice(k, 1);
+        } else k++;
+      }
+    }
+  }
 
-  //   // for (j = 0; j < 5; j++) {
-  //   //   if (colors[j] === "green") {
-  //   //     if (word[j] != guess[j]) {
-  //   //       wordList.splice(i, 1);
-  //   //       i--;
-  //   //       break;
-  //   //     }
-  //   //   }
-  //   // }
+  for (i = 0; i < yellowChar.length; i++) {
+    let k = 0;
+    while (k < wordList.length) {
+      let word = wordList[k];
+      let exists = false;
+      for (j = 0; j < 5; j++) {
+        if (word[j] == yellowChar[i] && word[j] != greenChar[i]) {
+          exists = true;
+        }
+      }
+      if (!exists) wordList.splice(k, 1);
+      else k++;
+    }
+  }
 
-  //   //   // if (colors[j] == "yellow") {
-  //   //   //   let oneMatch = false;
-  //   //   //   for (k = 0; k < 5; k++) {
-  //   //   //     if (word[k] == guess[j]) {
-  //   //   //       word[k] = 'x';
-  //   //   //       oneMatch = true;
-  //   //   //     }
-  //   //   //   }
-  //   //   // }
-  //   // }
-  //   i++;
-  // }
-  // wordList = newWordList;
-  // console.log(wordList);
+  for (i = 0; i < grayChar.length; i++) {
+    let k = 0;
+    let allowedExistence = 0;
+
+    for (j = 0; j < 5; j++) {
+      if (greenChar[j] == grayChar[i]) allowedExistence++;
+    }
+
+    for (j = 0; j < yellowChar.length; j++) {
+      if (yellowChar[j] == grayChar[i]) allowedExistence++;
+    }
+
+    console.log(allowedExistence, grayChar[i]);
+    while (k < wordList.length) {
+      let word = wordList[k];
+      let occurence = 0;
+
+      for (j = 0; j < 5; j++) {
+        if (word[j] == grayChar[i]) {
+          occurence++;
+        }
+      }
+
+      if (occurence > allowedExistence) wordList.splice(k, 1);
+      else k++;
+    }
+  }
+
   const validGuessDisplay = document.getElementById("right");
   validGuessDisplay.textContent = wordList.join(" ");
 };
