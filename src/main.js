@@ -1,4 +1,4 @@
-const ANSWER = "CARDS";
+const ANSWER = "PICKY";
 let wordList = null;
 let focusedIdx = 0;
 
@@ -10,6 +10,9 @@ let canMakeGuesses = true;
 let greenChar = ["", "", "", "", ""];
 let yellowChar = [];
 let grayChar = [];
+
+permutations = ['GGGGG', 'GGGGB',  'GGGYY', 'GGGYB', 'GGGBG', 'GGGBY', 'GGGBB', 'GGYGY', 'GGYGB', 'GGYYG', 'GGYYY', 'GGYYB', 'GGYBG', 'GGYBY', 'GGYBB', 'GGBGG', 'GGBGY', 'GGBGB', 'GGBYG', 'GGBYY', 'GGBYB', 'GGBBG', 'GGBBY', 'GGBBB', 'GYGGY', 'GYGGB', 'GYGYG', 'GYGYY', 'GYGYB', 'GYGBG', 'GYGBY', 'GYGBB', 'GYYGG', 'GYYGY', 'GYYGB', 'GYYYG', 'GYYYY', 'GYYYB', 'GYYBG', 'GYYBY', 'GYYBB', 'GYBGG', 'GYBGY', 'GYBGB', 'GYBYG', 'GYBYY', 'GYBYB', 'GYBBG', 'GYBBY', 'GYBBB', 'GBGGG', 'GBGGY', 'GBGGB', 'GBGYG', 'GBGYY', 'GBGYB', 'GBGBG', 'GBGBY', 'GBGBB', 'GBYGG', 'GBYGY', 'GBYGB', 'GBYYG', 'GBYYY', 'GBYYB', 'GBYBG', 'GBYBY', 'GBYBB', 'GBBGG', 'GBBGY', 'GBBGB', 'GBBYG', 'GBBYY', 'GBBYB', 'GBBBG', 'GBBBY', 'GBBBB', 'YGGGY', 'YGGGB', 'YGGYG', 'YGGYY', 'YGGYB', 'YGGBG', 'YGGBY', 'YGGBB', 'YGYGG', 'YGYGY', 'YGYGB', 'YGYYG', 'YGYYY', 'YGYYB', 'YGYBG', 'YGYBY', 'YGYBB', 'YGBGG', 'YGBGY', 'YGBGB', 'YGBYG', 'YGBYY', 'YGBYB', 'YGBBG', 'YGBBY', 'YGBBB', 'YYGGG', 'YYGGY', 'YYGGB', 'YYGYG', 'YYGYY', 'YYGYB', 'YYGBG', 'YYGBY', 'YYGBB', 'YYYGG', 'YYYGY', 'YYYGB', 'YYYYG', 'YYYYY', 'YYYYB', 'YYYBG', 'YYYBY', 'YYYBB', 'YYBGG', 'YYBGY', 'YYBGB', 'YYBYG', 'YYBYY', 'YYBYB', 'YYBBG', 'YYBBY', 'YYBBB', 'YBGGG', 'YBGGY', 'YBGGB', 'YBGYG', 'YBGYY', 'YBGYB', 'YBGBG', 'YBGBY', 'YBGBB', 'YBYGG', 'YBYGY', 'YBYGB', 'YBYYG', 'YBYYY', 'YBYYB', 'YBYBG', 'YBYBY', 'YBYBB', 'YBBGG', 'YBBGY', 'YBBGB', 'YBBYG', 'YBBYY', 'YBBYB', 'YBBBG', 'YBBBY', 'YBBBB', 'BGGGG', 'BGGGY', 'BGGGB', 'BGGYG', 'BGGYY', 'BGGYB', 'BGGBG', 'BGGBY', 'BGGBB', 'BGYGG', 'BGYGY', 'BGYGB', 'BGYYG', 'BGYYY', 'BGYYB', 'BGYBG', 'BGYBY', 'BGYBB', 'BGBGG', 'BGBGY', 'BGBGB', 'BGBYG', 'BGBYY', 'BGBYB', 'BGBBG', 'BGBBY', 'BGBBB', 'BYGGG', 'BYGGY', 'BYGGB', 'BYGYG', 'BYGYY', 'BYGYB', 'BYGBG', 'BYGBY', 'BYGBB', 'BYYGG', 'BYYGY', 'BYYGB', 'BYYYG', 'BYYYY', 'BYYYB', 'BYYBG', 'BYYBY', 'BYYBB', 'BYBGG', 'BYBGY', 'BYBGB', 'BYBYG', 'BYBYY', 'BYBYB', 'BYBBG', 'BYBBY', 'BYBBB', 'BBGGG', 'BBGGY', 'BBGGB', 'BBGYG', 'BBGYY', 'BBGYB', 'BBGBG', 'BBGBY', 'BBGBB', 'BBYGG', 'BBYGY', 'BBYGB', 'BBYYG', 'BBYYY', 'BBYYB', 'BBYBG', 'BBYBY', 'BBYBB', 'BBBGG', 'BBBGY', 'BBBGB', 'BBBYG', 'BBBYY', 'BBBYB', 'BBBBG', 'BBBBY', 'BBBBB']
+let totalWords = null;
 
 document.addEventListener("DOMContentLoaded", () => {
   fetch("valid-wordle-words.txt")
@@ -23,6 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((data) => {
       wordList = [data.split("\n")];
       wordList = wordList[0];
+      totalWords = wordList.length;
+      console.log("Best starting word: " + calculateWordFrequencies(wordList));
     });
 
   inputs = document.querySelectorAll('input[maxlength="1"]');
@@ -213,7 +218,7 @@ const checkGuess = (form, guess) => {
   guess = guess.map((item) => item.toLowerCase());
   let guessInList = wordList.indexOf(guess.join(""));
   if (guessInList >= 0) wordList.splice(guessInList, 1);
-  findValidGuesses(guess, colors);
+  findValidGuesses();
 };
 
 const updateStyle = (cell, color) => {
@@ -233,7 +238,8 @@ const updateStyle = (cell, color) => {
   }
 };
 
-const findValidGuesses = (guess, colors) => {
+
+const findValidGuesses = () => {
   if (!wordList || wordList.length == 0) return null;
 
   for (i = 0; i < 5; i++) {
@@ -290,7 +296,138 @@ const findValidGuesses = (guess, colors) => {
       else k++;
     }
   }
-
+  wordList = calculateWordFrequencies(wordList);
   const validGuessDisplay = document.getElementById("right");
   validGuessDisplay.textContent = wordList.join(" ");
 };
+
+const filterWords = (word, wordList, pattern) => {
+  let i = 0;
+  while (i < wordList.length) {
+
+    for (j = 0; j < 5; j++) {
+      if (pattern[j] === 'G') {
+        if (wordList[i][j] != word[j]) {
+          wordList.splice(i, 1);
+        } else i++;
+      }
+    }
+
+    for (j = 0; j < 5; j++) {
+      if (pattern[j] === 'Y') {
+        if (wordList[i][j] == word[j] || !wordList[i].includes(word[j])) {
+          wordList.splice(i, 1);
+        } else i++;
+      }
+    }
+
+    for (j = 0; j < 5; j++) {
+      if (pattern[j] === 'B') {
+        let totalOccurencesInWord = 0;
+        let totalOccurencesInGuess = 0;
+
+        for (k = 0; k < 5; k++) {
+          if (word[k] == word[j]) totalOccurencesInGuess++;
+          if (wordList[i][k] == word[j]) totalOccurencesInWord++;
+        }
+
+        if (totalOccurencesInWord > totalOccurencesInGuess) {
+          wordList.splice(i, 1);
+        } else i++;
+      }
+    }
+  } 
+  console.log("Filtered word list for word " + word + " with pattern " + pattern + ": " + wordList);
+  return wordList;
+}
+
+// compute entropy for all words (probably calculate them once and store em)
+// choose the word with the higest entropy
+// make a guess and update list of possible words
+// repeat (can i get away with calculating entropy only once?)
+
+const calculateEntropy = () => {
+  if (!wordList || !totalWords) {
+    return;
+  }
+  console.log("Calculating entropy...");
+
+  for (i = 0; i < wordList.length; i++) {
+    let totalOccurences = 0;
+    let word = wordList[i];
+    // filter the words for each pattern and count
+    for (j = 0; j < permutations.length; i++) {
+      console.log("Checking word: " + word + " with pattern: " + permutations[j]);
+      let wordListCopy = wordList;
+      wordListCopy.splice(i, 1); // remove current word
+      filterWords(word, wordListCopy, permutations[j]);
+      totalOccurences += wordListCopy.length;
+      console.log(totalOccurences);
+    }
+  }
+  
+  // find the word with the highest entropy
+  let maxEntropy = 0;
+  let bestWord = null;
+
+  for (i = 0; i < wordList.length; i++) {
+    let word = wordList[i];
+    let entropy = 0;
+
+    for (j = 0; j < permutations.length; j++) {
+      let wordListCopy = wordList.slice();
+      wordListCopy.splice(i, 1); // remove current word
+      filterWords(word, wordListCopy, permutations[j]);
+      entropy += wordListCopy.length;
+    }
+
+    if (entropy > maxEntropy) {
+      maxEntropy = entropy;
+      bestWord = word;
+    }
+  }
+
+  return bestWord;
+}
+
+const calculateWordFrequencies = (wordList) => {
+  if (!wordList) return;
+
+  let letterFrequencies = {};
+
+  for (i = 0; i < wordList.length; i++) {
+    let word = wordList[i];
+
+    word.split("").forEach((letter) => {
+      if (letter in letterFrequencies) {
+        letterFrequencies[letter] += 1;
+      } else {
+        letterFrequencies[letter] = 1;
+      }
+    });
+  }
+
+  let wordScores = {};
+
+  for (i = 0; i < wordList.length; i++) {
+    let word = wordList[i];
+    let uniqueLetters = new Set(word);
+    let score = 0;
+
+    uniqueLetters.forEach((letter) => {
+      score += letterFrequencies[letter];
+    });
+
+    wordScores[word] = score;
+  }
+
+  let sortable = [];
+  for (let word in wordScores) {
+    sortable.push([word, wordScores[word]]);
+  }
+
+  sortable.sort((a, b) => b[1] - a[1]);
+  console.log("Word scores: ", sortable.slice(0, 10));
+
+  return sortable.map(innerArray => innerArray[0]);
+}
