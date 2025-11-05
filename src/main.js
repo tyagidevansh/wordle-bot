@@ -1,4 +1,4 @@
-const ANSWER = "PICKY";
+let ANSWER = null;
 let wordList = null;
 let focusedIdx = 0;
 
@@ -9,6 +9,7 @@ let canMakeGuesses = true;
 
 let greenChar = ["", "", "", "", ""];
 let yellowChar = [];
+let yellowPositions = {};
 let grayChar = [];
 
 permutations = ['GGGGG', 'GGGGB',  'GGGYY', 'GGGYB', 'GGGBG', 'GGGBY', 'GGGBB', 'GGYGY', 'GGYGB', 'GGYYG', 'GGYYY', 'GGYYB', 'GGYBG', 'GGYBY', 'GGYBB', 'GGBGG', 'GGBGY', 'GGBGB', 'GGBYG', 'GGBYY', 'GGBYB', 'GGBBG', 'GGBBY', 'GGBBB', 'GYGGY', 'GYGGB', 'GYGYG', 'GYGYY', 'GYGYB', 'GYGBG', 'GYGBY', 'GYGBB', 'GYYGG', 'GYYGY', 'GYYGB', 'GYYYG', 'GYYYY', 'GYYYB', 'GYYBG', 'GYYBY', 'GYYBB', 'GYBGG', 'GYBGY', 'GYBGB', 'GYBYG', 'GYBYY', 'GYBYB', 'GYBBG', 'GYBBY', 'GYBBB', 'GBGGG', 'GBGGY', 'GBGGB', 'GBGYG', 'GBGYY', 'GBGYB', 'GBGBG', 'GBGBY', 'GBGBB', 'GBYGG', 'GBYGY', 'GBYGB', 'GBYYG', 'GBYYY', 'GBYYB', 'GBYBG', 'GBYBY', 'GBYBB', 'GBBGG', 'GBBGY', 'GBBGB', 'GBBYG', 'GBBYY', 'GBBYB', 'GBBBG', 'GBBBY', 'GBBBB', 'YGGGY', 'YGGGB', 'YGGYG', 'YGGYY', 'YGGYB', 'YGGBG', 'YGGBY', 'YGGBB', 'YGYGG', 'YGYGY', 'YGYGB', 'YGYYG', 'YGYYY', 'YGYYB', 'YGYBG', 'YGYBY', 'YGYBB', 'YGBGG', 'YGBGY', 'YGBGB', 'YGBYG', 'YGBYY', 'YGBYB', 'YGBBG', 'YGBBY', 'YGBBB', 'YYGGG', 'YYGGY', 'YYGGB', 'YYGYG', 'YYGYY', 'YYGYB', 'YYGBG', 'YYGBY', 'YYGBB', 'YYYGG', 'YYYGY', 'YYYGB', 'YYYYG', 'YYYYY', 'YYYYB', 'YYYBG', 'YYYBY', 'YYYBB', 'YYBGG', 'YYBGY', 'YYBGB', 'YYBYG', 'YYBYY', 'YYBYB', 'YYBBG', 'YYBBY', 'YYBBB', 'YBGGG', 'YBGGY', 'YBGGB', 'YBGYG', 'YBGYY', 'YBGYB', 'YBGBG', 'YBGBY', 'YBGBB', 'YBYGG', 'YBYGY', 'YBYGB', 'YBYYG', 'YBYYY', 'YBYYB', 'YBYBG', 'YBYBY', 'YBYBB', 'YBBGG', 'YBBGY', 'YBBGB', 'YBBYG', 'YBBYY', 'YBBYB', 'YBBBG', 'YBBBY', 'YBBBB', 'BGGGG', 'BGGGY', 'BGGGB', 'BGGYG', 'BGGYY', 'BGGYB', 'BGGBG', 'BGGBY', 'BGGBB', 'BGYGG', 'BGYGY', 'BGYGB', 'BGYYG', 'BGYYY', 'BGYYB', 'BGYBG', 'BGYBY', 'BGYBB', 'BGBGG', 'BGBGY', 'BGBGB', 'BGBYG', 'BGBYY', 'BGBYB', 'BGBBG', 'BGBBY', 'BGBBB', 'BYGGG', 'BYGGY', 'BYGGB', 'BYGYG', 'BYGYY', 'BYGYB', 'BYGBG', 'BYGBY', 'BYGBB', 'BYYGG', 'BYYGY', 'BYYGB', 'BYYYG', 'BYYYY', 'BYYYB', 'BYYBG', 'BYYBY', 'BYYBB', 'BYBGG', 'BYBGY', 'BYBGB', 'BYBYG', 'BYBYY', 'BYBYB', 'BYBBG', 'BYBBY', 'BYBBB', 'BBGGG', 'BBGGY', 'BBGGB', 'BBGYG', 'BBGYY', 'BBGYB', 'BBGBG', 'BBGBY', 'BBGBB', 'BBYGG', 'BBYGY', 'BBYGB', 'BBYYG', 'BBYYY', 'BBYYB', 'BBYBG', 'BBYBY', 'BBYBB', 'BBBGG', 'BBBGY', 'BBBGB', 'BBBYG', 'BBBYY', 'BBBYB', 'BBBBG', 'BBBBY', 'BBBBB']
@@ -27,7 +28,16 @@ document.addEventListener("DOMContentLoaded", () => {
       wordList = [data.split("\n")];
       wordList = wordList[0];
       totalWords = wordList.length;
-      console.log("Best starting word: " + calculateWordFrequencies(wordList));
+      
+      wordList = calculateWordFrequencies(wordList);
+
+      const validGuessDisplay = document.getElementById("right");
+      const displayText = "tares rales lares rates ranes nares teras aeros reais tears soare sater reals saner arles toeas laers aloes reans seria lears serai earls seral aeons nears earns arets taser tarse strae raise laser ranse stoae snare stare resat aesir arose aisle stear reast arise earst alose neosa aster anise isnae";
+      console.log(displayText);
+      validGuessDisplay.textContent = displayText;
+
+      const randomIdx = Math.floor(Math.random() * wordList.length);
+      ANSWER = wordList[randomIdx].toUpperCase();
     });
 
   inputs = document.querySelectorAll('input[maxlength="1"]');
@@ -174,6 +184,14 @@ const checkGuess = (form, guess) => {
         colors[i] = "yellow";
         tempYellowChar.push(guess[i]);
         answer[j] = "x"; // this character (lowercase) will never occur in the answer so im using it to ensure no character is counted twice
+
+        const lowerChar = guess[i].toLowerCase();
+        if (!yellowPositions[lowerChar]) {
+          yellowPositions[lowerChar] = [];
+        }
+        if (!yellowPositions[lowerChar].includes(i)) {
+          yellowPositions[lowerChar].push(i);
+        }
       }
     }
     for (idx = 0; idx < tempYellowChar.length; idx++) {
@@ -238,157 +256,195 @@ const updateStyle = (cell, color) => {
   }
 };
 
+const isWordValid = (word, greens, yellows, grays, yellowPositions = {}) => {
+  for (let i = 0; i < 5; i++) {
+    if (greens[i] && word[i] !== greens[i]) {
+      return false;
+    }
+  }
+
+  for (let yellowLetter of yellows) {
+    let foundInValidPosition = false;
+    for (let i = 0; i < 5; i++) {
+      if (greens[i] === yellowLetter) continue;
+      if (
+        yellowPositions[yellowLetter] &&
+        yellowPositions[yellowLetter].includes(i)
+      )
+        continue;
+      if (word[i] === yellowLetter) {
+        foundInValidPosition = true;
+        break;
+      }
+    }
+    if (!foundInValidPosition) {
+      return false;
+    }
+  }
+
+  for (let grayLetter of grays) {
+    let allowedCount = 0;
+
+    for (let i = 0; i < 5; i++) {
+      if (greens[i] === grayLetter) allowedCount++;
+    }
+
+    for (let yellowLetter of yellows) {
+      if (yellowLetter === grayLetter) allowedCount++;
+    }
+
+    let actualCount = 0;
+    for (let i = 0; i < 5; i++) {
+      if (word[i] === grayLetter) actualCount++;
+    }
+
+    if (actualCount > allowedCount) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+const filterWordList = (
+  words,
+  greens,
+  yellows,
+  grays,
+  yellowPositions = {}
+) => {
+  return words.filter((word) =>
+    isWordValid(word, greens, yellows, grays, yellowPositions)
+  );
+};
 
 const findValidGuesses = () => {
   if (!wordList || wordList.length == 0) return null;
 
-  for (i = 0; i < 5; i++) {
-    if (greenChar[i] != "") {
-      let k = 0;
-      while (k < wordList.length) {
-        let word = wordList[k];
-        if (word[i] != greenChar[i]) {
-          wordList.splice(k, 1);
-        } else k++;
-      }
-    }
-  }
+  const filtered = filterWordList(
+    wordList,
+    greenChar,
+    yellowChar,
+    grayChar,
+    yellowPositions
+  );
 
-  for (i = 0; i < yellowChar.length; i++) {
-    let k = 0;
-    while (k < wordList.length) {
-      let word = wordList[k];
-      let exists = false;
-      for (j = 0; j < 5; j++) {
-        if (word[j] == yellowChar[i] && word[j] != greenChar[i]) {
-          exists = true;
-        }
-      }
-      if (!exists) wordList.splice(k, 1);
-      else k++;
-    }
-  }
+  const sorted = calculateWordFrequencies(filtered);
 
-  for (i = 0; i < grayChar.length; i++) {
-    let k = 0;
-    let allowedExistence = 0;
+  const topEntropyWords = calculateEntropy(sorted, 20);
 
-    for (j = 0; j < 5; j++) {
-      if (greenChar[j] == grayChar[i]) allowedExistence++;
-    }
-
-    for (j = 0; j < yellowChar.length; j++) {
-      if (yellowChar[j] == grayChar[i]) allowedExistence++;
-    }
-
-    console.log(allowedExistence, grayChar[i]);
-    while (k < wordList.length) {
-      let word = wordList[k];
-      let occurence = 0;
-
-      for (j = 0; j < 5; j++) {
-        if (word[j] == grayChar[i]) {
-          occurence++;
-        }
-      }
-
-      if (occurence > allowedExistence) wordList.splice(k, 1);
-      else k++;
-    }
-  }
-  wordList = calculateWordFrequencies(wordList);
   const validGuessDisplay = document.getElementById("right");
-  validGuessDisplay.textContent = wordList.join(" ");
+
+  const displayText = topEntropyWords.map((item) => item.word).join(" ");
+
+  validGuessDisplay.textContent = displayText;
+
+  wordList = sorted;
 };
 
-const filterWords = (word, wordList, pattern) => {
-  let i = 0;
-  while (i < wordList.length) {
+const patternToConstraints = (guessWord, pattern) => {
+  const greens = ["", "", "", "", ""];
+  const yellows = [];
+  const grays = [];
+  const yellowPositions = {};
 
-    for (j = 0; j < 5; j++) {
-      if (pattern[j] === 'G') {
-        if (wordList[i][j] != word[j]) {
-          wordList.splice(i, 1);
-        } else i++;
-      }
+  for (let i = 0; i < 5; i++) {
+    if (pattern[i] === "G") {
+      greens[i] = guessWord[i];
     }
+  }
 
-    for (j = 0; j < 5; j++) {
-      if (pattern[j] === 'Y') {
-        if (wordList[i][j] == word[j] || !wordList[i].includes(word[j])) {
-          wordList.splice(i, 1);
-        } else i++;
+  for (let i = 0; i < 5; i++) {
+    const letter = guessWord[i];
+
+    if (pattern[i] === "Y") {
+      if (!yellows.includes(letter)) {
+        yellows.push(letter);
+        yellowPositions[letter] = [i];
+      } else {
+        yellowPositions[letter].push(i);
       }
-    }
-
-    for (j = 0; j < 5; j++) {
-      if (pattern[j] === 'B') {
-        let totalOccurencesInWord = 0;
-        let totalOccurencesInGuess = 0;
-
-        for (k = 0; k < 5; k++) {
-          if (word[k] == word[j]) totalOccurencesInGuess++;
-          if (wordList[i][k] == word[j]) totalOccurencesInWord++;
+    } else if (pattern[i] === "B") {
+      let isGreenOrYellow = false;
+      for (let j = 0; j < 5; j++) {
+        if (
+          guessWord[j] === letter &&
+          (pattern[j] === "G" || pattern[j] === "Y")
+        ) {
+          isGreenOrYellow = true;
+          break;
         }
-
-        if (totalOccurencesInWord > totalOccurencesInGuess) {
-          wordList.splice(i, 1);
-        } else i++;
+      }
+      if (!isGreenOrYellow && !grays.includes(letter)) {
+        grays.push(letter);
       }
     }
-  } 
-  console.log("Filtered word list for word " + word + " with pattern " + pattern + ": " + wordList);
-  return wordList;
-}
-
-// compute entropy for all words (probably calculate them once and store em)
-// choose the word with the higest entropy
-// make a guess and update list of possible words
-// repeat (can i get away with calculating entropy only once?)
-
-const calculateEntropy = () => {
-  if (!wordList || !totalWords) {
-    return;
   }
-  console.log("Calculating entropy...");
 
-  for (i = 0; i < wordList.length; i++) {
-    let totalOccurences = 0;
-    let word = wordList[i];
-    // filter the words for each pattern and count
-    for (j = 0; j < permutations.length; i++) {
-      console.log("Checking word: " + word + " with pattern: " + permutations[j]);
-      let wordListCopy = wordList;
-      wordListCopy.splice(i, 1); // remove current word
-      filterWords(word, wordListCopy, permutations[j]);
-      totalOccurences += wordListCopy.length;
-      console.log(totalOccurences);
-    }
+  return { greens, yellows, grays, yellowPositions };
+};
+
+
+const calculateEntropy = (candidateWords = null, maxWords = 20) => {
+  const words = candidateWords || wordList;
+
+  if (!words || words.length === 0) {
+    return [];
   }
-  
-  // find the word with the highest entropy
-  let maxEntropy = 0;
-  let bestWord = null;
 
-  for (i = 0; i < wordList.length; i++) {
-    let word = wordList[i];
+
+  const wordEntropyList = [];
+
+  const limit = Math.min(50, words.length);
+
+  for (let i = 0; i < limit; i++) {
+    const guessWord = words[i];
     let entropy = 0;
 
-    for (j = 0; j < permutations.length; j++) {
-      let wordListCopy = wordList.slice();
-      wordListCopy.splice(i, 1); // remove current word
-      filterWords(word, wordListCopy, permutations[j]);
-      entropy += wordListCopy.length;
+    const patternCounts = {};
+
+    for (let j = 0; j < permutations.length; j++) {
+      const pattern = permutations[j];
+
+      const constraints = patternToConstraints(guessWord, pattern);
+
+      const remainingWords = filterWordList(
+        words,
+        constraints.greens,
+        constraints.yellows,
+        constraints.grays,
+        constraints.yellowPositions
+      );
+
+      patternCounts[pattern] = remainingWords.length;
     }
 
-    if (entropy > maxEntropy) {
-      maxEntropy = entropy;
-      bestWord = word;
+    // calculate entropy: -sum(p * log2(p))
+    for (let pattern in patternCounts) {
+      const count = patternCounts[pattern];
+      if (count > 0) {
+        const p = count / words.length;
+        entropy -= p * Math.log2(p);
+      }
     }
+
+    wordEntropyList.push({ word: guessWord, entropy: entropy });
   }
 
-  return bestWord;
-}
+  wordEntropyList.sort((a, b) => b.entropy - a.entropy);
+
+  const topWords = wordEntropyList.slice(0, maxWords);
+
+  console.log(
+    "Top entropy words:",
+    topWords
+      .slice(0, 20)
+      .map((w) => `${w.word}(${w.entropy.toFixed(2)})`)
+      .join(", ")
+  );
+
+  return topWords;
+};
 
 const calculateWordFrequencies = (wordList) => {
   if (!wordList) return;
@@ -427,7 +483,6 @@ const calculateWordFrequencies = (wordList) => {
   }
 
   sortable.sort((a, b) => b[1] - a[1]);
-  console.log("Word scores: ", sortable.slice(0, 10));
 
-  return sortable.map(innerArray => innerArray[0]);
-}
+  return sortable.map((innerArray) => innerArray[0]);
+};
