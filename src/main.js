@@ -1,4 +1,5 @@
 let ANSWER = null;
+let wordListLine = null;
 let wordList = null;
 let focusedIdx = 0;
 
@@ -13,7 +14,330 @@ let yellowPositions = {};
 let grayChar = [];
 
 permutations = ['GGGGG', 'GGGGB',  'GGGYY', 'GGGYB', 'GGGBG', 'GGGBY', 'GGGBB', 'GGYGY', 'GGYGB', 'GGYYG', 'GGYYY', 'GGYYB', 'GGYBG', 'GGYBY', 'GGYBB', 'GGBGG', 'GGBGY', 'GGBGB', 'GGBYG', 'GGBYY', 'GGBYB', 'GGBBG', 'GGBBY', 'GGBBB', 'GYGGY', 'GYGGB', 'GYGYG', 'GYGYY', 'GYGYB', 'GYGBG', 'GYGBY', 'GYGBB', 'GYYGG', 'GYYGY', 'GYYGB', 'GYYYG', 'GYYYY', 'GYYYB', 'GYYBG', 'GYYBY', 'GYYBB', 'GYBGG', 'GYBGY', 'GYBGB', 'GYBYG', 'GYBYY', 'GYBYB', 'GYBBG', 'GYBBY', 'GYBBB', 'GBGGG', 'GBGGY', 'GBGGB', 'GBGYG', 'GBGYY', 'GBGYB', 'GBGBG', 'GBGBY', 'GBGBB', 'GBYGG', 'GBYGY', 'GBYGB', 'GBYYG', 'GBYYY', 'GBYYB', 'GBYBG', 'GBYBY', 'GBYBB', 'GBBGG', 'GBBGY', 'GBBGB', 'GBBYG', 'GBBYY', 'GBBYB', 'GBBBG', 'GBBBY', 'GBBBB', 'YGGGY', 'YGGGB', 'YGGYG', 'YGGYY', 'YGGYB', 'YGGBG', 'YGGBY', 'YGGBB', 'YGYGG', 'YGYGY', 'YGYGB', 'YGYYG', 'YGYYY', 'YGYYB', 'YGYBG', 'YGYBY', 'YGYBB', 'YGBGG', 'YGBGY', 'YGBGB', 'YGBYG', 'YGBYY', 'YGBYB', 'YGBBG', 'YGBBY', 'YGBBB', 'YYGGG', 'YYGGY', 'YYGGB', 'YYGYG', 'YYGYY', 'YYGYB', 'YYGBG', 'YYGBY', 'YYGBB', 'YYYGG', 'YYYGY', 'YYYGB', 'YYYYG', 'YYYYY', 'YYYYB', 'YYYBG', 'YYYBY', 'YYYBB', 'YYBGG', 'YYBGY', 'YYBGB', 'YYBYG', 'YYBYY', 'YYBYB', 'YYBBG', 'YYBBY', 'YYBBB', 'YBGGG', 'YBGGY', 'YBGGB', 'YBGYG', 'YBGYY', 'YBGYB', 'YBGBG', 'YBGBY', 'YBGBB', 'YBYGG', 'YBYGY', 'YBYGB', 'YBYYG', 'YBYYY', 'YBYYB', 'YBYBG', 'YBYBY', 'YBYBB', 'YBBGG', 'YBBGY', 'YBBGB', 'YBBYG', 'YBBYY', 'YBBYB', 'YBBBG', 'YBBBY', 'YBBBB', 'BGGGG', 'BGGGY', 'BGGGB', 'BGGYG', 'BGGYY', 'BGGYB', 'BGGBG', 'BGGBY', 'BGGBB', 'BGYGG', 'BGYGY', 'BGYGB', 'BGYYG', 'BGYYY', 'BGYYB', 'BGYBG', 'BGYBY', 'BGYBB', 'BGBGG', 'BGBGY', 'BGBGB', 'BGBYG', 'BGBYY', 'BGBYB', 'BGBBG', 'BGBBY', 'BGBBB', 'BYGGG', 'BYGGY', 'BYGGB', 'BYGYG', 'BYGYY', 'BYGYB', 'BYGBG', 'BYGBY', 'BYGBB', 'BYYGG', 'BYYGY', 'BYYGB', 'BYYYG', 'BYYYY', 'BYYYB', 'BYYBG', 'BYYBY', 'BYYBB', 'BYBGG', 'BYBGY', 'BYBGB', 'BYBYG', 'BYBYY', 'BYBYB', 'BYBBG', 'BYBBY', 'BYBBB', 'BBGGG', 'BBGGY', 'BBGGB', 'BBGYG', 'BBGYY', 'BBGYB', 'BBGBG', 'BBGBY', 'BBGBB', 'BBYGG', 'BBYGY', 'BBYGB', 'BBYYG', 'BBYYY', 'BBYYB', 'BBYBG', 'BBYBY', 'BBYBB', 'BBBGG', 'BBBGY', 'BBBGB', 'BBBYG', 'BBBYY', 'BBBYB', 'BBBBG', 'BBBBY', 'BBBBB']
+
+const INITIAL_BEST_GUESSES = [
+  {
+    word: "rates",
+    probability: 0.9706,
+    entropy: 6.7136513096165364,
+    score: 8.654851309616536,
+  },
+  {
+    word: "laser",
+    probability: 0.8979,
+    entropy: 6.249876248232372,
+    score: 8.045676248232372,
+  },
+  {
+    word: "tears",
+    probability: 0.7187,
+    entropy: 6.551016233600498,
+    score: 7.988416233600498,
+  },
+  {
+    word: "raise",
+    probability: 0.8479,
+    entropy: 6.282263033027902,
+    score: 7.978063033027902,
+  },
+  {
+    word: "arise",
+    probability: 0.6978,
+    entropy: 6.055642738993307,
+    score: 7.451242738993307,
+  },
+  {
+    word: "earns",
+    probability: 0.3332,
+    entropy: 6.366861668614153,
+    score: 7.033261668614153,
+  },
+  {
+    word: "arose",
+    probability: 0.4339,
+    entropy: 6.118350579286715,
+    score: 6.986150579286715,
+  },
+  {
+    word: "reals",
+    probability: 0.1951,
+    entropy: 6.532779719695167,
+    score: 6.922979719695167,
+  },
+  {
+    word: "stare",
+    probability: 0.3649,
+    entropy: 6.168185599724384,
+    score: 6.897985599724384,
+  },
+  {
+    word: "tares",
+    probability: 0.0254,
+    entropy: 6.823809914036242,
+    score: 6.874609914036242,
+  },
+  {
+    word: "aisle",
+    probability: 0.3639,
+    entropy: 6.087553783713163,
+    score: 6.815353783713163,
+  },
+  {
+    word: "arles",
+    probability: 0.1372,
+    entropy: 6.528865565424314,
+    score: 6.803265565424314,
+  },
+  {
+    word: "lares",
+    probability: 0.0238,
+    entropy: 6.7269322409728,
+    score: 6.7745322409728,
+  },
+  {
+    word: "earls",
+    probability: 0.1702,
+    entropy: 6.427770981892245,
+    score: 6.768170981892244,
+  },
+  {
+    word: "rales",
+    probability: 0.0115,
+    entropy: 6.741328040137408,
+    score: 6.764328040137408,
+  },
+  {
+    word: "snare",
+    probability: 0.2853,
+    entropy: 6.177551857793739,
+    score: 6.748151857793739,
+  },
+  {
+    word: "nares",
+    probability: 0.0198,
+    entropy: 6.688058334629991,
+    score: 6.727658334629991,
+  },
+  {
+    word: "nears",
+    probability: 0.1543,
+    entropy: 6.415147037877107,
+    score: 6.723747037877107,
+  },
+  {
+    word: "ranes",
+    probability: 0.001,
+    entropy: 6.694860633656685,
+    score: 6.6968606336566845,
+  },
+  {
+    word: "teras",
+    probability: 0.0089,
+    entropy: 6.667031435030617,
+    score: 6.684831435030617,
+  },
+  {
+    word: "aeros",
+    probability: 0.0455,
+    entropy: 6.577574806527985,
+    score: 6.668574806527985,
+  },
+  {
+    word: "reais",
+    probability: 0.0338,
+    entropy: 6.561403677352146,
+    score: 6.629003677352146,
+  },
+  {
+    word: "seria",
+    probability: 0.0705,
+    entropy: 6.4569843642574805,
+    score: 6.5979843642574805,
+  },
+  {
+    word: "saner",
+    probability: 0.0295,
+    entropy: 6.529437110125242,
+    score: 6.588437110125242,
+  },
+  {
+    word: "sater",
+    probability: 0.0198,
+    entropy: 6.537139770777034,
+    score: 6.576739770777034,
+  },
+  {
+    word: "soare",
+    probability: 0.001,
+    entropy: 6.546928848837518,
+    score: 6.548928848837518,
+  },
+  {
+    word: "taser",
+    probability: 0.0935,
+    entropy: 6.350239367723544,
+    score: 6.5372393677235445,
+  },
+  {
+    word: "aloes",
+    probability: 0.0238,
+    entropy: 6.468959977991522,
+    score: 6.516559977991522,
+  },
+  {
+    word: "toeas",
+    probability: 0.001,
+    entropy: 6.514336201374067,
+    score: 6.516336201374067,
+  },
+  {
+    word: "aeons",
+    probability: 0.0319,
+    entropy: 6.417261669405689,
+    score: 6.481061669405689,
+  },
+  {
+    word: "laers",
+    probability: 0.001,
+    entropy: 6.47500859138647,
+    score: 6.47700859138647,
+  },
+  {
+    word: "serai",
+    probability: 0.0139,
+    entropy: 6.442253166235533,
+    score: 6.470053166235533,
+  },
+  {
+    word: "lears",
+    probability: 0.0064,
+    entropy: 6.454129753011368,
+    score: 6.466929753011368,
+  },
+  {
+    word: "reans",
+    probability: 0.001,
+    entropy: 6.4615811966097105,
+    score: 6.46358119660971,
+  },
+  {
+    word: "seral",
+    probability: 0.0209,
+    entropy: 6.420968170350839,
+    score: 6.46276817035084,
+  },
+  {
+    word: "arets",
+    probability: 0.001,
+    entropy: 6.361882802300943,
+    score: 6.363882802300942,
+  },
+  {
+    word: "tarse",
+    probability: 0.001,
+    entropy: 6.349431221775428,
+    score: 6.351431221775428,
+  },
+  {
+    word: "strae",
+    probability: 0.001,
+    entropy: 6.292003622517227,
+    score: 6.294003622517227,
+  },
+  {
+    word: "aster",
+    probability: 0.1842,
+    entropy: 5.888286680828633,
+    score: 6.256686680828634,
+  },
+  {
+    word: "ranse",
+    probability: 0.001,
+    entropy: 6.232109022127793,
+    score: 6.234109022127793,
+  },
+  {
+    word: "stoae",
+    probability: 0.001,
+    entropy: 6.204475252050297,
+    score: 6.206475252050296,
+  },
+  {
+    word: "resat",
+    probability: 0.001,
+    entropy: 6.167852624909996,
+    score: 6.169852624909995,
+  },
+  {
+    word: "aesir",
+    probability: 0.0129,
+    entropy: 6.120936929193194,
+    score: 6.146736929193194,
+  },
+  {
+    word: "stear",
+    probability: 0.0101,
+    entropy: 6.085271101203848,
+    score: 6.105471101203848,
+  },
+  {
+    word: "reast",
+    probability: 0.0059,
+    entropy: 6.081107755891869,
+    score: 6.092907755891869,
+  },
+  {
+    word: "anise",
+    probability: 0.0963,
+    entropy: 5.819555798994505,
+    score: 6.012155798994504,
+  },
+  {
+    word: "earst",
+    probability: 0.001,
+    entropy: 5.985932908536648,
+    score: 5.9879329085366475,
+  },
+  {
+    word: "alose",
+    probability: 0.001,
+    entropy: 5.969448475161251,
+    score: 5.97144847516125,
+  },
+  {
+    word: "neosa",
+    probability: 0.001,
+    entropy: 5.967917461852079,
+    score: 5.969917461852079,
+  },
+  {
+    word: "isnae",
+    probability: 0.001,
+    entropy: 5.720393319250003,
+    score: 5.722393319250003,
+  },
+];
 let totalWords = null;
+let expectedInfoGain = null; 
+let actualInfoGain = null; 
+let remainingUncertainty = null; 
+let previousPossibleWords = null;
+let lastGuessWord = null; 
+
+const updateStats = () => {
+  document.getElementById("stat-total").textContent = totalWords || "—";
+  document.getElementById("stat-possible").textContent = wordList
+    ? wordList.length
+    : "—";
+  document.getElementById("stat-expected-gain").textContent =
+    expectedInfoGain !== null ? expectedInfoGain.toFixed(3) + " bits" : "—";
+  document.getElementById("stat-actual-gain").textContent =
+    actualInfoGain !== null ? actualInfoGain.toFixed(3) + " bits" : "—";
+  document.getElementById("stat-uncertainty").textContent =
+    remainingUncertainty !== null
+      ? remainingUncertainty.toFixed(3) + " bits"
+      : "—";
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   fetch("valid-wordle-words.txt")
@@ -25,19 +349,74 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.text();
     })
     .then((data) => {
-      wordList = [data.split("\n")];
-      wordList = wordList[0];
+      const lines = data.split("\n");
+
+      wordList = lines
+        .map((line) => {
+          const parts = line.split(",");
+          if (parts.length >= 2) {
+            const word = parts[0].trim();
+            const probability = parseFloat(parts[1].trim());
+            if (word.length === 5 && !isNaN(probability)) {
+              return { word, probability };
+            }
+          }
+          return null;
+        })
+        .filter((item) => item !== null);
+
       totalWords = wordList.length;
-      
+
       wordList = calculateWordFrequencies(wordList);
 
-      const validGuessDisplay = document.getElementById("right");
-      const displayText = "tares rales lares rates ranes nares teras aeros reais tears soare sater reals saner arles toeas laers aloes reans seria lears serai earls seral aeons nears earns arets taser tarse strae raise laser ranse stoae snare stare resat aesir arose aisle stear reast arise earst alose neosa aster anise isnae";
-      console.log(displayText);
-      validGuessDisplay.textContent = displayText;
+      const topEntropyWords = INITIAL_BEST_GUESSES.slice(0, 50);
+      console.log("Using precomputed initial top entropy words");
 
-      const randomIdx = Math.floor(Math.random() * wordList.length);
-      ANSWER = wordList[randomIdx].toUpperCase();
+      const validGuessDisplay = document.getElementById("right");
+
+      let tableHTML = `
+        <div style="display: grid; grid-template-columns: auto auto auto; gap: 20px; font-family: monospace; font-size: 16px;">
+          <div>
+            <div style="font-weight: bold; margin-bottom: 8px;">Word</div>
+            ${topEntropyWords.map((item) => `<div>${item.word}</div>`).join("")}
+          </div>
+          <div>
+            <div style="font-weight: bold; margin-bottom: 8px;">Entropy</div>
+            ${topEntropyWords
+              .map((item) => `<div>${item.entropy.toFixed(3)}</div>`)
+              .join("")}
+          </div>
+          <div>
+            <div style="font-weight: bold; margin-bottom: 8px;">Probability</div>
+            ${topEntropyWords
+              .map((item) => `<div>${item.probability.toFixed(4)}</div>`)
+              .join("")}
+          </div>
+        </div>
+      `;
+
+      validGuessDisplay.innerHTML = tableHTML;
+
+      previousPossibleWords = wordList.length;
+      updateStats();
+    });
+
+  fetch("possible-answers.txt")
+    .then((response) => {
+      if (!response.ok) {
+        console.log("couldnt read file");
+        return;
+      }
+      console.log("possible answers file read");
+      return response.text();
+    })
+    .then((data) => {
+      let answerList = [data.split("\n")];
+      answerList = answerList[0];
+      console.log(answerList);
+      const randomIdx = Math.floor(Math.random() * answerList.length);
+      ANSWER = answerList[randomIdx].toUpperCase();
+      console.log(`Game started. Answer selected: ${ANSWER}`);
     });
 
   inputs = document.querySelectorAll('input[maxlength="1"]');
@@ -234,9 +613,26 @@ const checkGuess = (form, guess) => {
     setTimeout(updateStyle, 500 * i, form[i], colors[i]);
   }
   guess = guess.map((item) => item.toLowerCase());
-  let guessInList = wordList.indexOf(guess.join(""));
+  const guessWord = guess.join("");
+
+  const patternStr = colors
+    .map((c) => {
+      if (c === "green") return "G";
+      if (c === "yellow") return "Y";
+      return "B";
+    })
+    .join("");
+
+  expectedInfoGain = calculateEntropyForWord(guessWord, wordList);
+
+  lastGuessWord = guessWord;
+
+  const guessInList = wordList.findIndex(
+    (wordObj) => wordObj.word === guessWord
+  );
   if (guessInList >= 0) wordList.splice(guessInList, 1);
-  findValidGuesses();
+
+  findValidGuesses(patternStr, guessWord);
 };
 
 const updateStyle = (cell, color) => {
@@ -254,6 +650,65 @@ const updateStyle = (cell, color) => {
   ) {
     key.classList.add("bg-[#3a3a3c]");
   }
+};
+
+const getPattern = (guess, answer) => {
+  const pattern = ["B", "B", "B", "B", "B"];
+  const answerChars = answer.split("");
+  const guessChars = guess.split("");
+
+  for (let i = 0; i < 5; i++) {
+    if (guessChars[i] === answerChars[i]) {
+      pattern[i] = "G";
+      answerChars[i] = null; 
+    }
+  }
+
+  for (let i = 0; i < 5; i++) {
+    if (pattern[i] === "G") continue;
+
+    const guessChar = guessChars[i];
+    const answerIdx = answerChars.indexOf(guessChar);
+
+    if (answerIdx !== -1) {
+      pattern[i] = "Y";
+      answerChars[answerIdx] = null; 
+    }
+  }
+
+  return pattern.join("");
+};
+
+const calculateEntropyForWord = (guessWord, wordObjects) => {
+  if (!wordObjects || wordObjects.length === 0) return 0;
+
+  let entropy = 0;
+  const patternCounts = {};
+
+  for (let j = 0; j < permutations.length; j++) {
+    const pattern = permutations[j];
+    const constraints = patternToConstraints(guessWord, pattern);
+
+    const remainingWords = filterWordList(
+      wordObjects,
+      constraints.greens,
+      constraints.yellows,
+      constraints.grays,
+      constraints.yellowPositions
+    );
+
+    patternCounts[pattern] = remainingWords.length;
+  }
+
+  for (let pattern in patternCounts) {
+    const count = patternCounts[pattern];
+    if (count > 0) {
+      const p = count / wordObjects.length;
+      entropy -= p * Math.log2(p);
+    }
+  }
+
+  return entropy;
 };
 
 const isWordValid = (word, greens, yellows, grays, yellowPositions = {}) => {
@@ -307,19 +762,41 @@ const isWordValid = (word, greens, yellows, grays, yellowPositions = {}) => {
 };
 
 const filterWordList = (
-  words,
+  wordObjects,
   greens,
   yellows,
   grays,
   yellowPositions = {}
 ) => {
-  return words.filter((word) =>
-    isWordValid(word, greens, yellows, grays, yellowPositions)
+  return wordObjects.filter((wordObj) =>
+    isWordValid(wordObj.word, greens, yellows, grays, yellowPositions)
   );
 };
 
-const findValidGuesses = () => {
+const findValidGuesses = (patternStr = null, guessWord = null) => {
   if (!wordList || wordList.length == 0) return null;
+
+  if (patternStr && guessWord && previousPossibleWords !== null) {
+
+    const preFilterWordList = [...wordList];
+
+    const totalProb = preFilterWordList.reduce(
+      (sum, w) => sum + w.probability,
+      0
+    );
+    let patternProb = 0;
+
+    for (const wordObj of preFilterWordList) {
+      const testPattern = getPattern(guessWord, wordObj.word);
+      if (testPattern === patternStr) {
+        patternProb += wordObj.probability / totalProb;
+      }
+    }
+
+    if (patternProb > 0) {
+      actualInfoGain = -Math.log2(patternProb);
+    }
+  }
 
   const filtered = filterWordList(
     wordList,
@@ -331,15 +808,51 @@ const findValidGuesses = () => {
 
   const sorted = calculateWordFrequencies(filtered);
 
-  const topEntropyWords = calculateEntropy(sorted, 20);
+  const topEntropyWords = calculateEntropy(sorted, 50);
 
   const validGuessDisplay = document.getElementById("right");
 
-  const displayText = topEntropyWords.map((item) => item.word).join(" ");
+  let tableHTML = `
+    <div style="display: grid; grid-template-columns: auto auto auto; gap: 20px; font-family: monospace; font-size: 14px;">
+      <div>
+        <div style="font-weight: bold; margin-bottom: 8px;">Word</div>
+        ${topEntropyWords.map((item) => `<div>${item.word}</div>`).join("")}
+      </div>
+      <div>
+        <div style="font-weight: bold; margin-bottom: 8px;">Entropy</div>
+        ${topEntropyWords
+          .map((item) => `<div>${item.entropy.toFixed(3)}</div>`)
+          .join("")}
+      </div>
+      <div>
+        <div style="font-weight: bold; margin-bottom: 8px;">Probability</div>
+        ${topEntropyWords
+          .map((item) => `<div>${item.probability.toFixed(4)}</div>`)
+          .join("")}
+      </div>
+    </div>
+  `;
 
-  validGuessDisplay.textContent = displayText;
+  validGuessDisplay.innerHTML = tableHTML;
+
+  if (filtered.length > 0) {
+    const totalProb = filtered.reduce((sum, w) => sum + w.probability, 0);
+    remainingUncertainty = 0;
+    for (const wordObj of filtered) {
+      const p = wordObj.probability / totalProb;
+      if (p > 0) {
+        remainingUncertainty -= p * Math.log2(p);
+      }
+    }
+  }
+
+  previousPossibleWords = filtered.length;
 
   wordList = sorted;
+
+  updateStats();
+
+  console.log(`${filtered.length} valid words remaining`);
 };
 
 const patternToConstraints = (guessWord, pattern) => {
@@ -384,21 +897,20 @@ const patternToConstraints = (guessWord, pattern) => {
   return { greens, yellows, grays, yellowPositions };
 };
 
-
 const calculateEntropy = (candidateWords = null, maxWords = 20) => {
-  const words = candidateWords || wordList;
+  const wordObjects = candidateWords || wordList;
 
-  if (!words || words.length === 0) {
+  if (!wordObjects || wordObjects.length === 0) {
     return [];
   }
 
-
   const wordEntropyList = [];
 
-  const limit = Math.min(50, words.length);
+  const limit = Math.min(50, wordObjects.length);
 
   for (let i = 0; i < limit; i++) {
-    const guessWord = words[i];
+    const wordObj = wordObjects[i];
+    const guessWord = wordObj.word;
     let entropy = 0;
 
     const patternCounts = {};
@@ -409,7 +921,7 @@ const calculateEntropy = (candidateWords = null, maxWords = 20) => {
       const constraints = patternToConstraints(guessWord, pattern);
 
       const remainingWords = filterWordList(
-        words,
+        wordObjects,
         constraints.greens,
         constraints.yellows,
         constraints.grays,
@@ -419,40 +931,36 @@ const calculateEntropy = (candidateWords = null, maxWords = 20) => {
       patternCounts[pattern] = remainingWords.length;
     }
 
-    // calculate entropy: -sum(p * log2(p))
     for (let pattern in patternCounts) {
       const count = patternCounts[pattern];
       if (count > 0) {
-        const p = count / words.length;
+        const p = count / wordObjects.length;
         entropy -= p * Math.log2(p);
       }
     }
 
-    wordEntropyList.push({ word: guessWord, entropy: entropy });
+    const score = entropy + wordObj.probability * 2; 
+    wordEntropyList.push({
+      word: guessWord,
+      probability: wordObj.probability,
+      entropy: entropy,
+      score: score,
+    });
   }
 
-  wordEntropyList.sort((a, b) => b.entropy - a.entropy);
+  wordEntropyList.sort((a, b) => b.score - a.score);
 
   const topWords = wordEntropyList.slice(0, maxWords);
-
-  console.log(
-    "Top entropy words:",
-    topWords
-      .slice(0, 20)
-      .map((w) => `${w.word}(${w.entropy.toFixed(2)})`)
-      .join(", ")
-  );
-
   return topWords;
 };
 
-const calculateWordFrequencies = (wordList) => {
-  if (!wordList) return;
+const calculateWordFrequencies = (wordObjects) => {
+  if (!wordObjects || wordObjects.length === 0) return [];
 
   let letterFrequencies = {};
 
-  for (i = 0; i < wordList.length; i++) {
-    let word = wordList[i];
+  for (let i = 0; i < wordObjects.length; i++) {
+    let word = wordObjects[i].word;
 
     word.split("").forEach((letter) => {
       if (letter in letterFrequencies) {
@@ -463,26 +971,22 @@ const calculateWordFrequencies = (wordList) => {
     });
   }
 
-  let wordScores = {};
-
-  for (i = 0; i < wordList.length; i++) {
-    let word = wordList[i];
-    let uniqueLetters = new Set(word);
+  let scoredWords = wordObjects.map((wordObj) => {
+    let uniqueLetters = new Set(wordObj.word);
     let score = 0;
 
     uniqueLetters.forEach((letter) => {
       score += letterFrequencies[letter];
     });
 
-    wordScores[word] = score;
-  }
+    return {
+      word: wordObj.word,
+      probability: wordObj.probability,
+      frequencyScore: score,
+    };
+  });
 
-  let sortable = [];
-  for (let word in wordScores) {
-    sortable.push([word, wordScores[word]]);
-  }
+  scoredWords.sort((a, b) => b.frequencyScore - a.frequencyScore);
 
-  sortable.sort((a, b) => b[1] - a[1]);
-
-  return sortable.map((innerArray) => innerArray[0]);
+  return scoredWords;
 };

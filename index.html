@@ -7,8 +7,34 @@
   <body class="bg-[#121213] min-h-screen text-white container mx-auto overflow-y-auto p-4 select-none">
 
     <div class="grid grid-cols-4 w-full">
-      <div id="left" class="col-span-1">
-
+      <div id="left" class="col-span-1 pl-4 pt-4 pr-8 text-sm leading-relaxed" style="font-family: monospace;">
+        <div class="space-y-6">
+          <div>
+            <h3 class="font-semibold text-xl mb-2 text-gray-300">Statistics</h3>
+            <div class="text-gray-400 text-xl space-y-1">
+              <div class="flex justify-between">
+                <span>Total words:</span>
+                <span id="stat-total" class="text-gray-300 font-mono">—</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Possible words:</span>
+                <span id="stat-possible" class="text-gray-300 font-mono">—</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Expected info gain:</span>
+                <span id="stat-expected-gain" class="text-gray-300 font-mono">—</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Actual info gain:</span>
+                <span id="stat-actual-gain" class="text-gray-300 font-mono">—</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Uncertainty left:</span>
+                <span id="stat-uncertainty" class="text-gray-300 font-mono">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div id = "center" class="items-center justify-center col-span-2">
         <div id="input-container" class="text-3xl justify-center flex flex-col mt-12 space-y-2 uppercase font-bold">
