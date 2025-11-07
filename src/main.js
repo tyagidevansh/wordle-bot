@@ -836,14 +836,7 @@ const findValidGuesses = (patternStr = null, guessWord = null) => {
   validGuessDisplay.innerHTML = tableHTML;
 
   if (filtered.length > 0) {
-    const totalProb = filtered.reduce((sum, w) => sum + w.probability, 0);
-    remainingUncertainty = 0;
-    for (const wordObj of filtered) {
-      const p = wordObj.probability / totalProb;
-      if (p > 0) {
-        remainingUncertainty -= p * Math.log2(p);
-      }
-    }
+    remainingUncertainty = Math.log2(filtered.length);
   }
 
   previousPossibleWords = filtered.length;
