@@ -3,12 +3,14 @@
   <head>
     <link rel="stylesheet" href="src/style.css">
     <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-[#121213] min-h-screen text-white container mx-auto overflow-y-auto p-4 select-none">
 
     <div class="grid grid-cols-4 w-full">
       <div id="left" class="col-span-1 pl-4 pt-4 pr-8 text-sm leading-relaxed" style="font-family: monospace;">
-        <div class="space-y-6">
+        <div class="space-y-6 flex flex-col">
           <div>
             <h3 class="font-semibold text-xl mb-2 text-gray-300">Statistics</h3>
             <div class="text-gray-400 text-xl space-y-1">
@@ -34,56 +36,65 @@
               </div>
             </div>
           </div>
+          <div class="font-semibold text-xl mb-2 text-gray-300">
+            What is this site?
+            <div class="text-gray-400 text-xl font-medium">
+              A random word is generated everytime the page is reloaded. The solver does not know that word, and neither do you.
+              You can either play it like a normal game of wordle, or you can just input the words the solver suggests to see it in action.
+              Statistics and best guesses are calculated each turn. 
+            </div>
+          </div>
+          
         </div>
       </div>
       <div id = "center" class="items-center justify-center col-span-2">
         <div id="input-container" class="text-3xl justify-center flex flex-col mt-12 space-y-2 uppercase font-bold">
           <form name="row-1" id="row-1" class = "flex justify-center gap-2">
-            <input id = "11" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "12" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "13" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "14" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "15" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "11" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "12" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "13" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "14" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "15" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
           </form>
 
           <form name="row-2" id="row-2" class = "flex justify-center gap-2">
-            <input id = "21" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "22" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "23" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "24" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "25" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "21" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "22" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "23" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "24" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "25" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
           </form>
 
           <form name="row-3" id="row-3" class = "flex justify-center gap-2">
-            <input id = "31" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "32" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "33" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "34" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "35" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "31" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "32" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "33" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "34" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "35" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
           </form>
 
           <form name="row-4" id="row-4" class = "flex justify-center gap-2">
-            <input id = "41" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "42" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "43" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "44" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "45" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "41" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "42" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "43" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "44" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "45" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
           </form>
 
           <form name="row-5" id="row-5" class = "flex justify-center gap-2">
-            <input id = "51" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "52" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "53" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "54" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "55" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "51" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "52" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "53" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "54" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "55" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
           </form>
 
           <form name="row-6" id="row-6" class = "flex justify-center gap-2">
-            <input id = "61" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "62" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "63" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "64" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
-            <input id = "65" type="text" maxlength="1" class="border border-gray-400 rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "61" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "62" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "63" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "64" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
+            <input id = "65" type="text" maxlength="1" class="border border-gray-400 bg-[#121213] rounded-sm h-14 w-14 text-center focus:outline-0 [caret-color:transparent]">
           </form>
         </div>
 

@@ -13,7 +13,246 @@ let yellowChar = [];
 let yellowPositions = {};
 let grayChar = [];
 
-permutations = ['GGGGG', 'GGGGB',  'GGGYY', 'GGGYB', 'GGGBG', 'GGGBY', 'GGGBB', 'GGYGY', 'GGYGB', 'GGYYG', 'GGYYY', 'GGYYB', 'GGYBG', 'GGYBY', 'GGYBB', 'GGBGG', 'GGBGY', 'GGBGB', 'GGBYG', 'GGBYY', 'GGBYB', 'GGBBG', 'GGBBY', 'GGBBB', 'GYGGY', 'GYGGB', 'GYGYG', 'GYGYY', 'GYGYB', 'GYGBG', 'GYGBY', 'GYGBB', 'GYYGG', 'GYYGY', 'GYYGB', 'GYYYG', 'GYYYY', 'GYYYB', 'GYYBG', 'GYYBY', 'GYYBB', 'GYBGG', 'GYBGY', 'GYBGB', 'GYBYG', 'GYBYY', 'GYBYB', 'GYBBG', 'GYBBY', 'GYBBB', 'GBGGG', 'GBGGY', 'GBGGB', 'GBGYG', 'GBGYY', 'GBGYB', 'GBGBG', 'GBGBY', 'GBGBB', 'GBYGG', 'GBYGY', 'GBYGB', 'GBYYG', 'GBYYY', 'GBYYB', 'GBYBG', 'GBYBY', 'GBYBB', 'GBBGG', 'GBBGY', 'GBBGB', 'GBBYG', 'GBBYY', 'GBBYB', 'GBBBG', 'GBBBY', 'GBBBB', 'YGGGY', 'YGGGB', 'YGGYG', 'YGGYY', 'YGGYB', 'YGGBG', 'YGGBY', 'YGGBB', 'YGYGG', 'YGYGY', 'YGYGB', 'YGYYG', 'YGYYY', 'YGYYB', 'YGYBG', 'YGYBY', 'YGYBB', 'YGBGG', 'YGBGY', 'YGBGB', 'YGBYG', 'YGBYY', 'YGBYB', 'YGBBG', 'YGBBY', 'YGBBB', 'YYGGG', 'YYGGY', 'YYGGB', 'YYGYG', 'YYGYY', 'YYGYB', 'YYGBG', 'YYGBY', 'YYGBB', 'YYYGG', 'YYYGY', 'YYYGB', 'YYYYG', 'YYYYY', 'YYYYB', 'YYYBG', 'YYYBY', 'YYYBB', 'YYBGG', 'YYBGY', 'YYBGB', 'YYBYG', 'YYBYY', 'YYBYB', 'YYBBG', 'YYBBY', 'YYBBB', 'YBGGG', 'YBGGY', 'YBGGB', 'YBGYG', 'YBGYY', 'YBGYB', 'YBGBG', 'YBGBY', 'YBGBB', 'YBYGG', 'YBYGY', 'YBYGB', 'YBYYG', 'YBYYY', 'YBYYB', 'YBYBG', 'YBYBY', 'YBYBB', 'YBBGG', 'YBBGY', 'YBBGB', 'YBBYG', 'YBBYY', 'YBBYB', 'YBBBG', 'YBBBY', 'YBBBB', 'BGGGG', 'BGGGY', 'BGGGB', 'BGGYG', 'BGGYY', 'BGGYB', 'BGGBG', 'BGGBY', 'BGGBB', 'BGYGG', 'BGYGY', 'BGYGB', 'BGYYG', 'BGYYY', 'BGYYB', 'BGYBG', 'BGYBY', 'BGYBB', 'BGBGG', 'BGBGY', 'BGBGB', 'BGBYG', 'BGBYY', 'BGBYB', 'BGBBG', 'BGBBY', 'BGBBB', 'BYGGG', 'BYGGY', 'BYGGB', 'BYGYG', 'BYGYY', 'BYGYB', 'BYGBG', 'BYGBY', 'BYGBB', 'BYYGG', 'BYYGY', 'BYYGB', 'BYYYG', 'BYYYY', 'BYYYB', 'BYYBG', 'BYYBY', 'BYYBB', 'BYBGG', 'BYBGY', 'BYBGB', 'BYBYG', 'BYBYY', 'BYBYB', 'BYBBG', 'BYBBY', 'BYBBB', 'BBGGG', 'BBGGY', 'BBGGB', 'BBGYG', 'BBGYY', 'BBGYB', 'BBGBG', 'BBGBY', 'BBGBB', 'BBYGG', 'BBYGY', 'BBYGB', 'BBYYG', 'BBYYY', 'BBYYB', 'BBYBG', 'BBYBY', 'BBYBB', 'BBBGG', 'BBBGY', 'BBBGB', 'BBBYG', 'BBBYY', 'BBBYB', 'BBBBG', 'BBBBY', 'BBBBB']
+permutations = [
+  "GGGGG",
+  "GGGGB",
+  "GGGYY",
+  "GGGYB",
+  "GGGBG",
+  "GGGBY",
+  "GGGBB",
+  "GGYGY",
+  "GGYGB",
+  "GGYYG",
+  "GGYYY",
+  "GGYYB",
+  "GGYBG",
+  "GGYBY",
+  "GGYBB",
+  "GGBGG",
+  "GGBGY",
+  "GGBGB",
+  "GGBYG",
+  "GGBYY",
+  "GGBYB",
+  "GGBBG",
+  "GGBBY",
+  "GGBBB",
+  "GYGGY",
+  "GYGGB",
+  "GYGYG",
+  "GYGYY",
+  "GYGYB",
+  "GYGBG",
+  "GYGBY",
+  "GYGBB",
+  "GYYGG",
+  "GYYGY",
+  "GYYGB",
+  "GYYYG",
+  "GYYYY",
+  "GYYYB",
+  "GYYBG",
+  "GYYBY",
+  "GYYBB",
+  "GYBGG",
+  "GYBGY",
+  "GYBGB",
+  "GYBYG",
+  "GYBYY",
+  "GYBYB",
+  "GYBBG",
+  "GYBBY",
+  "GYBBB",
+  "GBGGG",
+  "GBGGY",
+  "GBGGB",
+  "GBGYG",
+  "GBGYY",
+  "GBGYB",
+  "GBGBG",
+  "GBGBY",
+  "GBGBB",
+  "GBYGG",
+  "GBYGY",
+  "GBYGB",
+  "GBYYG",
+  "GBYYY",
+  "GBYYB",
+  "GBYBG",
+  "GBYBY",
+  "GBYBB",
+  "GBBGG",
+  "GBBGY",
+  "GBBGB",
+  "GBBYG",
+  "GBBYY",
+  "GBBYB",
+  "GBBBG",
+  "GBBBY",
+  "GBBBB",
+  "YGGGY",
+  "YGGGB",
+  "YGGYG",
+  "YGGYY",
+  "YGGYB",
+  "YGGBG",
+  "YGGBY",
+  "YGGBB",
+  "YGYGG",
+  "YGYGY",
+  "YGYGB",
+  "YGYYG",
+  "YGYYY",
+  "YGYYB",
+  "YGYBG",
+  "YGYBY",
+  "YGYBB",
+  "YGBGG",
+  "YGBGY",
+  "YGBGB",
+  "YGBYG",
+  "YGBYY",
+  "YGBYB",
+  "YGBBG",
+  "YGBBY",
+  "YGBBB",
+  "YYGGG",
+  "YYGGY",
+  "YYGGB",
+  "YYGYG",
+  "YYGYY",
+  "YYGYB",
+  "YYGBG",
+  "YYGBY",
+  "YYGBB",
+  "YYYGG",
+  "YYYGY",
+  "YYYGB",
+  "YYYYG",
+  "YYYYY",
+  "YYYYB",
+  "YYYBG",
+  "YYYBY",
+  "YYYBB",
+  "YYBGG",
+  "YYBGY",
+  "YYBGB",
+  "YYBYG",
+  "YYBYY",
+  "YYBYB",
+  "YYBBG",
+  "YYBBY",
+  "YYBBB",
+  "YBGGG",
+  "YBGGY",
+  "YBGGB",
+  "YBGYG",
+  "YBGYY",
+  "YBGYB",
+  "YBGBG",
+  "YBGBY",
+  "YBGBB",
+  "YBYGG",
+  "YBYGY",
+  "YBYGB",
+  "YBYYG",
+  "YBYYY",
+  "YBYYB",
+  "YBYBG",
+  "YBYBY",
+  "YBYBB",
+  "YBBGG",
+  "YBBGY",
+  "YBBGB",
+  "YBBYG",
+  "YBBYY",
+  "YBBYB",
+  "YBBBG",
+  "YBBBY",
+  "YBBBB",
+  "BGGGG",
+  "BGGGY",
+  "BGGGB",
+  "BGGYG",
+  "BGGYY",
+  "BGGYB",
+  "BGGBG",
+  "BGGBY",
+  "BGGBB",
+  "BGYGG",
+  "BGYGY",
+  "BGYGB",
+  "BGYYG",
+  "BGYYY",
+  "BGYYB",
+  "BGYBG",
+  "BGYBY",
+  "BGYBB",
+  "BGBGG",
+  "BGBGY",
+  "BGBGB",
+  "BGBYG",
+  "BGBYY",
+  "BGBYB",
+  "BGBBG",
+  "BGBBY",
+  "BGBBB",
+  "BYGGG",
+  "BYGGY",
+  "BYGGB",
+  "BYGYG",
+  "BYGYY",
+  "BYGYB",
+  "BYGBG",
+  "BYGBY",
+  "BYGBB",
+  "BYYGG",
+  "BYYGY",
+  "BYYGB",
+  "BYYYG",
+  "BYYYY",
+  "BYYYB",
+  "BYYBG",
+  "BYYBY",
+  "BYYBB",
+  "BYBGG",
+  "BYBGY",
+  "BYBGB",
+  "BYBYG",
+  "BYBYY",
+  "BYBYB",
+  "BYBBG",
+  "BYBBY",
+  "BYBBB",
+  "BBGGG",
+  "BBGGY",
+  "BBGGB",
+  "BBGYG",
+  "BBGYY",
+  "BBGYB",
+  "BBGBG",
+  "BBGBY",
+  "BBGBB",
+  "BBYGG",
+  "BBYGY",
+  "BBYGB",
+  "BBYYG",
+  "BBYYY",
+  "BBYYB",
+  "BBYBG",
+  "BBYBY",
+  "BBYBB",
+  "BBBGG",
+  "BBBGY",
+  "BBBGB",
+  "BBBYG",
+  "BBBYY",
+  "BBBYB",
+  "BBBBG",
+  "BBBBY",
+  "BBBBB",
+];
 
 const INITIAL_BEST_GUESSES = [
   {
@@ -318,11 +557,11 @@ const INITIAL_BEST_GUESSES = [
   },
 ];
 let totalWords = null;
-let expectedInfoGain = null; 
-let actualInfoGain = null; 
-let remainingUncertainty = null; 
+let expectedInfoGain = null;
+let actualInfoGain = null;
+let remainingUncertainty = null;
 let previousPossibleWords = null;
-let lastGuessWord = null; 
+let lastGuessWord = null;
 
 const updateStats = () => {
   document.getElementById("stat-total").textContent = totalWords || "—";
@@ -339,85 +578,113 @@ const updateStats = () => {
       : "—";
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  fetch("valid-wordle-words.txt")
-    .then((response) => {
-      if (!response.ok) {
-        console.log("couldnt read file");
-        return;
-      }
-      return response.text();
-    })
-    .then((data) => {
-      const lines = data.split("\n");
+const setRightPanelMessage = (message) => {
+  const validGuessDisplay = document.getElementById("right");
+  validGuessDisplay.innerHTML = `<div style="font-family: monospace; font-size: 16px; white-space: pre-wrap;">${message}</div>`;
+};
 
-      wordList = lines
-        .map((line) => {
-          const parts = line.split(",");
-          if (parts.length >= 2) {
-            const word = parts[0].trim();
-            const probability = parseFloat(parts[1].trim());
-            if (word.length === 5 && !isNaN(probability)) {
-              return { word, probability };
-            }
+const loadTextFile = async (paths) => {
+  const failures = [];
+
+  for (const path of paths) {
+    try {
+      const response = await fetch(path, { cache: "no-store" });
+      if (!response.ok) {
+        failures.push(`${path} (${response.status})`);
+        continue;
+      }
+      return await response.text();
+    } catch (error) {
+      failures.push(`${path} (${error.message})`);
+    }
+  }
+
+  throw new Error(failures.join("; "));
+};
+
+document.addEventListener("DOMContentLoaded", async () => {
+  if (window.location.protocol === "file:") {
+    setRightPanelMessage(
+      "Word lists cannot be loaded when opening index.html directly from disk (file://).\n\nUse a static server or GitHub Pages so fetch() can read files.",
+    );
+  }
+
+  try {
+    const validWordsText = await loadTextFile([
+      "public/valid-wordle-words.txt",
+      "./public/valid-wordle-words.txt",
+      "valid-wordle-words.txt",
+    ]);
+
+    const lines = validWordsText.split("\n");
+
+    wordList = lines
+      .map((line) => {
+        const parts = line.split(",");
+        if (parts.length >= 2) {
+          const word = parts[0].trim();
+          const probability = parseFloat(parts[1].trim());
+          if (word.length === 5 && !isNaN(probability)) {
+            return { word, probability };
           }
-          return null;
-        })
-        .filter((item) => item !== null);
+        }
+        return null;
+      })
+      .filter((item) => item !== null);
 
-      totalWords = wordList.length;
+    totalWords = wordList.length;
+    wordList = calculateWordFrequencies(wordList);
 
-      wordList = calculateWordFrequencies(wordList);
-
-      const topEntropyWords = INITIAL_BEST_GUESSES.slice(0, 50);
-      console.log("Using precomputed initial top entropy words");
-
-      const validGuessDisplay = document.getElementById("right");
-
-      let tableHTML = `
-        <div style="display: grid; grid-template-columns: auto auto auto; gap: 20px; font-family: monospace; font-size: 16px;">
-          <div>
-            <div style="font-weight: bold; margin-bottom: 8px;">Word</div>
-            ${topEntropyWords.map((item) => `<div>${item.word}</div>`).join("")}
-          </div>
-          <div>
-            <div style="font-weight: bold; margin-bottom: 8px;">Entropy</div>
-            ${topEntropyWords
-              .map((item) => `<div>${item.entropy.toFixed(3)}</div>`)
-              .join("")}
-          </div>
-          <div>
-            <div style="font-weight: bold; margin-bottom: 8px;">Probability</div>
-            ${topEntropyWords
-              .map((item) => `<div>${item.probability.toFixed(4)}</div>`)
-              .join("")}
-          </div>
+    const topEntropyWords = INITIAL_BEST_GUESSES.slice(0, 50);
+    const tableHTML = `
+      <div style="display: grid; grid-template-columns: auto auto auto; gap: 20px; font-family: monospace; font-size: 16px;">
+        <div>
+          <div style="font-weight: bold; margin-bottom: 8px;">Word</div>
+          ${topEntropyWords.map((item) => `<div>${item.word}</div>`).join("")}
         </div>
-      `;
+        <div>
+          <div style="font-weight: bold; margin-bottom: 8px;">Entropy</div>
+          ${topEntropyWords
+            .map((item) => `<div>${item.entropy.toFixed(3)}</div>`)
+            .join("")}
+        </div>
+        <div>
+          <div style="font-weight: bold; margin-bottom: 8px;">Probability</div>
+          ${topEntropyWords
+            .map((item) => `<div>${item.probability.toFixed(4)}</div>`)
+            .join("")}
+        </div>
+      </div>
+    `;
 
-      validGuessDisplay.innerHTML = tableHTML;
+    document.getElementById("right").innerHTML = tableHTML;
+    previousPossibleWords = wordList.length;
+    updateStats();
 
-      previousPossibleWords = wordList.length;
-      updateStats();
-    });
+    const answersText = await loadTextFile([
+      "public/possible-answers.txt",
+      "./public/possible-answers.txt",
+      "possible-answers.txt",
+    ]);
 
-  fetch("possible-answers.txt")
-    .then((response) => {
-      if (!response.ok) {
-        console.log("couldnt read file");
-        return;
-      }
-      console.log("possible answers file read");
-      return response.text();
-    })
-    .then((data) => {
-      let answerList = [data.split("\n")];
-      answerList = answerList[0];
-      console.log(answerList);
-      const randomIdx = Math.floor(Math.random() * answerList.length);
-      ANSWER = answerList[randomIdx].toUpperCase();
-      console.log(`Game started. Answer selected: ${ANSWER}`);
-    });
+    const answerList = answersText
+      .split("\n")
+      .map((item) => item.trim())
+      .filter((item) => item.length > 0);
+
+    if (!answerList.length) {
+      throw new Error("No answers found in possible-answers.txt");
+    }
+
+    const randomIdx = Math.floor(Math.random() * answerList.length);
+    ANSWER = answerList[randomIdx].toUpperCase();
+    console.log(`Game started. Answer selected: ${ANSWER}`);
+  } catch (error) {
+    console.error("Failed to initialize word lists", error);
+    setRightPanelMessage(
+      `Could not load word lists.\n\n${error.message}\n\nIf testing locally, run a static server instead of opening index.html directly.`,
+    );
+  }
 
   inputs = document.querySelectorAll('input[maxlength="1"]');
   keys = document.querySelectorAll(".key");
@@ -431,7 +698,7 @@ document.addEventListener("DOMContentLoaded", () => {
     input.addEventListener("input", () => handleInputField(input));
 
     input.addEventListener("keydown", (event) =>
-      handleBackspaceAndEnter(event)
+      handleBackspaceAndEnter(event),
     );
   });
 
@@ -628,7 +895,7 @@ const checkGuess = (form, guess) => {
   lastGuessWord = guessWord;
 
   const guessInList = wordList.findIndex(
-    (wordObj) => wordObj.word === guessWord
+    (wordObj) => wordObj.word === guessWord,
   );
   if (guessInList >= 0) wordList.splice(guessInList, 1);
 
@@ -660,7 +927,7 @@ const getPattern = (guess, answer) => {
   for (let i = 0; i < 5; i++) {
     if (guessChars[i] === answerChars[i]) {
       pattern[i] = "G";
-      answerChars[i] = null; 
+      answerChars[i] = null;
     }
   }
 
@@ -672,7 +939,7 @@ const getPattern = (guess, answer) => {
 
     if (answerIdx !== -1) {
       pattern[i] = "Y";
-      answerChars[answerIdx] = null; 
+      answerChars[answerIdx] = null;
     }
   }
 
@@ -694,7 +961,7 @@ const calculateEntropyForWord = (guessWord, wordObjects) => {
       constraints.greens,
       constraints.yellows,
       constraints.grays,
-      constraints.yellowPositions
+      constraints.yellowPositions,
     );
 
     patternCounts[pattern] = remainingWords.length;
@@ -766,10 +1033,10 @@ const filterWordList = (
   greens,
   yellows,
   grays,
-  yellowPositions = {}
+  yellowPositions = {},
 ) => {
   return wordObjects.filter((wordObj) =>
-    isWordValid(wordObj.word, greens, yellows, grays, yellowPositions)
+    isWordValid(wordObj.word, greens, yellows, grays, yellowPositions),
   );
 };
 
@@ -777,12 +1044,11 @@ const findValidGuesses = (patternStr = null, guessWord = null) => {
   if (!wordList || wordList.length == 0) return null;
 
   if (patternStr && guessWord && previousPossibleWords !== null) {
-
     const preFilterWordList = [...wordList];
 
     const totalProb = preFilterWordList.reduce(
       (sum, w) => sum + w.probability,
-      0
+      0,
     );
     let patternProb = 0;
 
@@ -803,7 +1069,7 @@ const findValidGuesses = (patternStr = null, guessWord = null) => {
     greenChar,
     yellowChar,
     grayChar,
-    yellowPositions
+    yellowPositions,
   );
 
   const sorted = calculateWordFrequencies(filtered);
@@ -918,7 +1184,7 @@ const calculateEntropy = (candidateWords = null, maxWords = 20) => {
         constraints.greens,
         constraints.yellows,
         constraints.grays,
-        constraints.yellowPositions
+        constraints.yellowPositions,
       );
 
       patternCounts[pattern] = remainingWords.length;
@@ -932,7 +1198,7 @@ const calculateEntropy = (candidateWords = null, maxWords = 20) => {
       }
     }
 
-    const score = entropy + wordObj.probability * 2; 
+    const score = entropy + wordObj.probability * 2;
     wordEntropyList.push({
       word: guessWord,
       probability: wordObj.probability,
